@@ -1,9 +1,11 @@
 import * as Device from 'expo-device';
+import { useState } from 'react';
 import { Platform, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { AnimatedIcon } from '@/components/animated-icon';
 import { HintRow } from '@/components/hint-row';
+import { MotDePasse } from '@/components/mot-de-passe';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { WebBadge } from '@/components/web-badge';
@@ -29,6 +31,8 @@ function getDevMenuHint() {
 }
 
 export default function HomeScreen() {
+  const [message, setMessage] = useState('');
+
   return (
     <ThemedView style={styles.container}>
       <SafeAreaView style={styles.safeArea}>
@@ -38,6 +42,14 @@ export default function HomeScreen() {
             Welcome to&nbsp;Expo
           </ThemedText>
         </ThemedView>
+
+        <MotDePasse
+          placeholder="Mot de passe"
+          maxLength={8}
+          onChangeText={() => setMessage('')}
+          onMaxLengthReached={() => setMessage('Nombre maximum de caractères atteint !')}
+        />
+        {message !== '' && <ThemedText type="small">{message}</ThemedText>}
 
         <ThemedText type="code" style={styles.code}>
           get started
